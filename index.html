@@ -1,0 +1,1036 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#11120f">
+  <meta name="description" content="OTXS Local Guide — save useful places, travel services, cafes, repair shops and destinations.">
+  <title>OTXS Local Guide | Discover and Explore</title>
+
+  <style>
+    :root {
+      --bg: #11120f;
+      --panel: #1b1d18;
+      --panel2: #24261f;
+      --text: #f5f3eb;
+      --muted: #a5a798;
+      --orange: #ff9f32;
+      --yellow: #ffd166;
+      --border: #34362d;
+      --danger: #ff7777;
+      --green: #9bd7a4;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+    }
+
+    a { color: var(--yellow); }
+
+    button, input, select, textarea { font: inherit; }
+
+    button, .button {
+      border: 1px solid var(--border);
+      background: var(--panel2);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      transition: border-color .2s, transform .2s;
+    }
+
+    button:hover, .button:hover {
+      border-color: var(--orange);
+      transform: translateY(-1px);
+    }
+
+    button.primary, .button.primary {
+      color: #18150e;
+      background: var(--orange);
+      border-color: var(--orange);
+      font-weight: 700;
+    }
+
+    button.danger { color: var(--danger); }
+    button.small { padding: 6px 10px; font-size: .88rem; }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      background: rgba(17,18,15,.96);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .nav {
+      max-width: 1180px;
+      margin: auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      color: var(--text);
+      font-weight: 900;
+      font-size: 1.35rem;
+      text-decoration: none;
+      letter-spacing: 1px;
+    }
+
+    .brand span { color: var(--orange); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .92rem;
+    }
+
+    .nav-links a:hover { color: var(--yellow); }
+
+    .nav select {
+      max-width: 180px;
+      padding: 8px;
+    }
+
+    main {
+      max-width: 1180px;
+      margin: auto;
+      padding: 30px 20px 60px;
+    }
+
+    .hero {
+      padding: 28px 0 24px;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      color: var(--orange);
+      text-transform: uppercase;
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      line-height: 1.1;
+      margin: 12px 0;
+    }
+
+    h1 span { color: var(--yellow); }
+
+    .hero p, .muted { color: var(--muted); }
+
+    .hero-card {
+      background: linear-gradient(140deg, #29271c, #1b1d18 70%);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px;
+    }
+
+    .hero-card strong {
+      color: var(--yellow);
+      font-size: 2rem;
+      display: block;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .stat {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 12px;
+      border-radius: 12px;
+    }
+
+    .stat strong { font-size: 1.35rem; }
+    .stat span { display: block; font-size: .8rem; color: var(--muted); }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 28px 0 14px;
+    }
+
+    h2 { margin: 0; font-size: 1.4rem; }
+    h3 { margin-top: 0; }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 18px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field.full { grid-column: 1 / -1; }
+
+    label {
+      font-size: .9rem;
+      color: var(--muted);
+    }
+
+    input, select, textarea {
+      width: 100%;
+      min-width: 0;
+      color: var(--text);
+      background: #12130f;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 11px 12px;
+      outline: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--orange);
+    }
+
+    textarea { resize: vertical; min-height: 85px; }
+
+    .form-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .filters {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .places-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .place-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .place-card:hover { border-color: #686044; }
+
+    .place-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .place-icon {
+      font-size: 1.65rem;
+      width: 46px;
+      height: 46px;
+      background: var(--panel2);
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+
+    .category {
+      display: inline-block;
+      color: var(--yellow);
+      background: #37301e;
+      padding: 4px 9px;
+      border-radius: 999px;
+      font-size: .75rem;
+      margin-bottom: 9px;
+    }
+
+    .place-card h3 {
+      margin: 0 0 5px;
+      overflow-wrap: anywhere;
+    }
+
+    .place-location {
+      color: var(--muted);
+      font-size: .9rem;
+      margin: 5px 0 10px;
+    }
+
+    .place-notes {
+      color: #d3d3c8;
+      font-size: .92rem;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .place-meta {
+      color: var(--muted);
+      font-size: .85rem;
+      margin-top: 8px;
+      overflow-wrap: anywhere;
+    }
+
+    .place-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: auto;
+      padding-top: 16px;
+    }
+
+    .place-actions a { font-size: .86rem; }
+
+    .empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 40px 20px;
+      border: 1px dashed var(--border);
+      border-radius: 16px;
+      color: var(--muted);
+    }
+
+    .notice {
+      border: 1px solid #65502b;
+      background: #242015;
+      color: #e9d9b5;
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-size: .9rem;
+      margin-top: 20px;
+    }
+
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 25px 20px;
+      color: var(--muted);
+      text-align: center;
+      font-size: .88rem;
+    }
+
+    .footer a { text-decoration: none; }
+
+    #toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      max-width: calc(100% - 40px);
+      padding: 12px 16px;
+      border-radius: 10px;
+      background: var(--yellow);
+      color: #19160d;
+      font-weight: 700;
+      display: none;
+      z-index: 50;
+    }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 900px) {
+      .places-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hero { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .nav { align-items: flex-start; flex-direction: column; }
+      .nav-links { gap: 10px; }
+      main { padding: 20px 14px 40px; }
+      .form-grid, .filters, .places-grid { grid-template-columns: 1fr; }
+      .field.full { grid-column: auto; }
+      .stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .panel { padding: 15px; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav class="nav">
+      <a class="brand" href="https://home.otxs.de">OTX<span>S</span></a>
+      <div class="nav-links">
+        <a href="https://home.otxs.de">Home</a>
+        <a href="https://trave.otxs.de">Travel</a>
+        <a href="https://adventure.otxs.de">Adventure</a>
+        <a href="https://stays.otxs.de">Stays</a>
+        <a href="https://ride-companion.otxs.de">Ride Companion</a>
+        <select aria-label="Explore OTXS apps" id="appNav">
+          <option value="">Explore apps…</option>
+          <option value="https://apps.otxs.de">All apps</option>
+          <option value="https://explore.otxs.de">Destination Explorer</option>
+          <option value="https://planner.otxs.de">Trip Planner</option>
+          <option value="https://trip-cost.otxs.de">Trip Cost Calculator</option>
+          <option value="https://roads.otxs.de">Road Conditions</option>
+          <option value="https://documents.otxs.de">Travel Documents</option>
+          <option value="https://safety.otxs.de">Ride Safety</option>
+          <option value="https://local.otxs.de">Local Guide</option>
+        </select>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <div class="eyebrow">OTXS · Discover and Explore</div>
+        <h1>Your local guide to <span>better journeys.</span></h1>
+        <p>
+          Keep useful places in one place — from cafés and viewpoints to
+          petrol pumps, bike workshops, hospitals and overnight stops.
+          Create your own directory for the places you visit.
+        </p>
+        <a class="button primary" href="#add-place">＋ Add a place</a>
+      </div>
+
+      <div class="hero-card">
+        <div class="eyebrow">Your personal directory</div>
+        <strong id="heroCount">0 places</strong>
+        <span class="muted">Save places you discover along the way.</span>
+        <div class="stats">
+          <div class="stat">
+            <strong id="totalCount">0</strong>
+            <span>Total places</span>
+          </div>
+          <div class="stat">
+            <strong id="categoryCount">0</strong>
+            <span>Categories</span>
+          </div>
+          <div class="stat">
+            <strong id="locationCount">0</strong>
+            <span>Locations</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="add-place">
+      <div class="section-title" style="margin-top:0">
+        <h2 id="formHeading">Add a place</h2>
+        <span class="muted">Build your own directory</span>
+      </div>
+
+      <form id="placeForm">
+        <input type="hidden" id="placeId">
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="placeName">Place name *</label>
+            <input id="placeName" maxlength="100" required
+                   placeholder="e.g. Mountain View Café">
+          </div>
+
+          <div class="field">
+            <label for="placeCategory">Category *</label>
+            <select id="placeCategory" required>
+              <option value="Attraction">Attraction / Viewpoint</option>
+              <option value="Cafe">Café / Restaurant</option>
+              <option value="Fuel">Petrol Pump / EV Charging</option>
+              <option value="Bike Repair">Bike Repair / Workshop</option>
+              <option value="Accommodation">Hotel / Homestay</option>
+              <option value="Healthcare">Hospital / Pharmacy</option>
+              <option value="Shopping">Shopping / Local Market</option>
+              <option value="Transport">Transport / Parking</option>
+              <option value="Nature">Waterfall / Nature</option>
+              <option value="Camping">Camping / Overnight Stop</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="placeLocation">Town / area *</label>
+            <input id="placeLocation" maxlength="120" required
+                   placeholder="e.g. Solan, Himachal Pradesh">
+          </div>
+
+          <div class="field">
+            <label for="placeAddress">Address or map location</label>
+            <input id="placeAddress" maxlength="250"
+                   placeholder="Street, landmark or nearby road">
+          </div>
+
+          <div class="field">
+            <label for="placePhone">Contact number</label>
+            <input id="placePhone" type="tel" maxlength="40"
+                   placeholder="Optional">
+          </div>
+
+          <div class="field">
+            <label for="placeWebsite">Website or social link</label>
+            <input id="placeWebsite" type="url" maxlength="300"
+                   placeholder="https://example.com">
+          </div>
+
+          <div class="field">
+            <label for="placeRating">Your rating</label>
+            <select id="placeRating">
+              <option value="">Not rated</option>
+              <option value="5">★★★★★ — Excellent</option>
+              <option value="4">★★★★☆ — Very good</option>
+              <option value="3">★★★☆☆ — Average</option>
+              <option value="2">★★☆☆☆ — Below average</option>
+              <option value="1">★☆☆☆☆ — Poor</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="placeVisited">Visit status</label>
+            <select id="placeVisited">
+              <option value="Planned">Want to visit</option>
+              <option value="Visited">Already visited</option>
+              <option value="Favourite">Favourite</option>
+            </select>
+          </div>
+
+          <div class="field full">
+            <label for="placeNotes">Notes, facilities and tips</label>
+            <textarea id="placeNotes" maxlength="1500"
+              placeholder="Opening hours you observed, parking, road access, facilities, price range, or useful travel tips…"></textarea>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button class="primary" type="submit" id="saveButton">Save place</button>
+          <button type="button" id="cancelEdit" class="hidden">Cancel edit</button>
+          <button type="reset" id="resetForm">Clear form</button>
+        </div>
+      </form>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <h2>Your saved places</h2>
+        <div class="form-actions" style="margin:0">
+          <button type="button" id="exportButton">Export JSON</button>
+          <button type="button" id="importButton">Import JSON</button>
+          <input type="file" id="importFile" accept=".json,application/json" class="hidden">
+        </div>
+      </div>
+
+      <div class="filters">
+        <input type="search" id="searchInput"
+               placeholder="Search name, area, address or notes…"
+               aria-label="Search saved places">
+
+        <select id="categoryFilter" aria-label="Filter by category">
+          <option value="">All categories</option>
+          <option value="Attraction">Attractions / Viewpoints</option>
+          <option value="Cafe">Cafés / Restaurants</option>
+          <option value="Fuel">Fuel / EV Charging</option>
+          <option value="Bike Repair">Bike Repair</option>
+          <option value="Accommodation">Accommodation</option>
+          <option value="Healthcare">Healthcare</option>
+          <option value="Shopping">Shopping / Markets</option>
+          <option value="Transport">Transport / Parking</option>
+          <option value="Nature">Nature</option>
+          <option value="Camping">Camping</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <select id="statusFilter" aria-label="Filter by visit status">
+          <option value="">All statuses</option>
+          <option value="Planned">Want to visit</option>
+          <option value="Visited">Visited</option>
+          <option value="Favourite">Favourites</option>
+        </select>
+      </div>
+
+      <div id="placesGrid" class="places-grid"></div>
+    </section>
+
+    <div class="notice">
+      <strong>Important:</strong> This is a personal, browser-based directory.
+      It does not automatically fetch live business listings, confirm opening
+      hours, verify road conditions, or share your saved entries with other users.
+      Check critical details directly with the place before travelling.
+      Avoid storing private or sensitive information here.
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div><strong>OTXS</strong> · Discover and Explore</div>
+    <div style="margin-top:6px">
+      <a href="https://otxs.de">OTXS Home</a> ·
+      <a href="https://apps.otxs.de">Explore OTXS Apps</a>
+    </div>
+    <div style="margin-top:8px">© <span id="year"></span> OTXS</div>
+  </footer>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    "use strict";
+
+    const STORAGE_KEY = "otxs_local_guide_v1";
+
+    const categoryIcons = {
+      "Attraction": "🏞️",
+      "Cafe": "☕",
+      "Fuel": "⛽",
+      "Bike Repair": "🏍️",
+      "Accommodation": "🛏️",
+      "Healthcare": "🏥",
+      "Shopping": "🛍️",
+      "Transport": "🅿️",
+      "Nature": "🌿",
+      "Camping": "🏕️",
+      "Other": "📍"
+    };
+
+    const $ = (id) => document.getElementById(id);
+
+    let places = loadPlaces();
+    let toastTimeout;
+
+    function makeId() {
+      if (window.crypto && crypto.randomUUID) {
+        return crypto.randomUUID();
+      }
+      return Date.now().toString(36) + Math.random().toString(36).slice(2);
+    }
+
+    function loadPlaces() {
+      try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (!stored) return [];
+        const parsed = JSON.parse(stored);
+        return Array.isArray(parsed)
+          ? parsed.filter(p => p && typeof p === "object" && p.id && p.name)
+          : [];
+      } catch (error) {
+        console.error("Unable to load saved places:", error);
+        return [];
+      }
+    }
+
+    function savePlaces() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(places));
+        return true;
+      } catch (error) {
+        showToast("Could not save. Browser storage may be full or unavailable.");
+        console.error(error);
+        return false;
+      }
+    }
+
+    function showToast(message) {
+      const toast = $("toast");
+      toast.textContent = message;
+      toast.style.display = "block";
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.style.display = "none";
+      }, 3000);
+    }
+
+    function escapeHTML(value) {
+      return String(value ?? "").replace(/[&<>"']/g, character => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      })[character]);
+    }
+
+    function safeHttpUrl(value) {
+      if (!value) return "";
+      try {
+        const url = new URL(value);
+        if (url.protocol === "http:" || url.protocol === "https:") {
+          return url.href;
+        }
+      } catch (_) {}
+      return "";
+    }
+
+    function categoryIcon(category) {
+      return categoryIcons[category] || "📍";
+    }
+
+    function googleMapsSearch(place) {
+      const query = [
+        place.name,
+        place.address,
+        place.location
+      ].filter(Boolean).join(", ");
+
+      return "https://www.google.com/maps/search/?api=1&query=" +
+        encodeURIComponent(query);
+    }
+
+    function googleMapsDirections(place) {
+      const destination = [
+        place.name,
+        place.address,
+        place.location
+      ].filter(Boolean).join(", ");
+
+      return "https://www.google.com/maps/dir/?api=1&destination=" +
+        encodeURIComponent(destination);
+    }
+
+    function renderStats() {
+      const total = places.length;
+      const categories = new Set(places.map(p => p.category).filter(Boolean));
+      const locations = new Set(
+        places.map(p => (p.location || "").trim().toLowerCase()).filter(Boolean)
+      );
+
+      $("totalCount").textContent = total;
+      $("categoryCount").textContent = categories.size;
+      $("locationCount").textContent = locations.size;
+      $("heroCount").textContent = total + (total === 1 ? " place" : " places");
+    }
+
+    function getFilteredPlaces() {
+      const query = $("searchInput").value.trim().toLowerCase();
+      const category = $("categoryFilter").value;
+      const status = $("statusFilter").value;
+
+      return places
+        .filter(place => {
+          const searchable = [
+            place.name, place.category, place.location, place.address,
+            place.phone, place.website, place.notes, place.status
+          ].join(" ").toLowerCase();
+
+          return (!query || searchable.includes(query)) &&
+            (!category || place.category === category) &&
+            (!status || place.status === status);
+        })
+        .sort((a, b) => {
+          const dateA = new Date(a.updatedAt || a.createdAt || 0).getTime();
+          const dateB = new Date(b.updatedAt || b.createdAt || 0).getTime();
+          return dateB - dateA;
+        });
+    }
+
+    function renderPlaces() {
+      renderStats();
+
+      const grid = $("placesGrid");
+      const filtered = getFilteredPlaces();
+
+      if (!filtered.length) {
+        grid.innerHTML = `
+          <div class="empty">
+            <div style="font-size:2rem">🧭</div>
+            <h3>No places found</h3>
+            <p>Try changing your search or filters, or add your first place above.</p>
+          </div>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(place => {
+        const name = escapeHTML(place.name);
+        const category = escapeHTML(place.category || "Other");
+        const location = escapeHTML(place.location || "Location not specified");
+        const address = escapeHTML(place.address || "");
+        const phone = escapeHTML(place.phone || "");
+        const notes = escapeHTML(place.notes || "");
+        const status = escapeHTML(place.status || "Planned");
+        const rating = Number(place.rating);
+        const hasRating = Number.isFinite(rating) && rating >= 1 && rating <= 5;
+        const stars = hasRating ? "★".repeat(rating) + "☆".repeat(5 - rating) : "";
+        const website = safeHttpUrl(place.website);
+        const mapLink = googleMapsSearch(place);
+        const directionsLink = googleMapsDirections(place);
+
+        const phoneLink = phone
+          ? `<a class="button small" href="tel:${encodeURIComponent(place.phone)}">Call</a>`
+          : "";
+
+        const websiteLink = website
+          ? `<a class="button small" href="${escapeHTML(website)}" target="_blank" rel="noopener noreferrer">Website ↗</a>`
+          : "";
+
+        return `
+          <article class="place-card">
+            <div class="place-top">
+              <div>
+                <span class="category">${category}</span>
+                <h3>${name}</h3>
+              </div>
+              <div class="place-icon" aria-hidden="true">${categoryIcon(place.category)}</div>
+            </div>
+
+            <div class="place-location">📍 ${location}</div>
+
+            ${address ? `<div class="place-meta">${address}</div>` : ""}
+            ${phone ? `<div class="place-meta">☎ ${phone}</div>` : ""}
+            ${hasRating ? `<div class="place-meta" style="color:var(--yellow)">${stars}</div>` : ""}
+
+            <div class="place-meta">Status: ${status}</div>
+
+            ${notes ? `<p class="place-notes">${notes}</p>` : ""}
+
+            <div class="place-actions">
+              <a class="button small" href="${mapLink}" target="_blank" rel="noopener noreferrer">View map ↗</a>
+              <a class="button small" href="${directionsLink}" target="_blank" rel="noopener noreferrer">Directions ↗</a>
+              ${phoneLink}
+              ${websiteLink}
+              <button type="button" class="small" data-action="edit" data-id="${escapeHTML(place.id)}">Edit</button>
+              <button type="button" class="small danger" data-action="delete" data-id="${escapeHTML(place.id)}">Delete</button>
+            </div>
+          </article>`;
+      }).join("");
+    }
+
+    function resetForm() {
+      $("placeForm").reset();
+      $("placeId").value = "";
+      $("formHeading").textContent = "Add a place";
+      $("saveButton").textContent = "Save place";
+      $("cancelEdit").classList.add("hidden");
+    }
+
+    function editPlace(id) {
+      const place = places.find(p => p.id === id);
+      if (!place) return;
+
+      $("placeId").value = place.id;
+      $("placeName").value = place.name || "";
+      $("placeCategory").value = place.category || "Other";
+      $("placeLocation").value = place.location || "";
+      $("placeAddress").value = place.address || "";
+      $("placePhone").value = place.phone || "";
+      $("placeWebsite").value = place.website || "";
+      $("placeRating").value = place.rating || "";
+      $("placeVisited").value = place.status || "Planned";
+      $("placeNotes").value = place.notes || "";
+
+      $("formHeading").textContent = "Edit place";
+      $("saveButton").textContent = "Update place";
+      $("cancelEdit").classList.remove("hidden");
+
+      $("add-place").scrollIntoView({ behavior: "smooth", block: "start" });
+      $("placeName").focus();
+    }
+
+    function deletePlace(id) {
+      const place = places.find(p => p.id === id);
+      if (!place) return;
+
+      if (!confirm(`Delete "${place.name}" from your local guide?`)) return;
+
+      places = places.filter(p => p.id !== id);
+      if (savePlaces()) {
+        renderPlaces();
+        showToast("Place deleted.");
+      }
+    }
+
+    $("placeForm").addEventListener("submit", event => {
+      event.preventDefault();
+
+      const name = $("placeName").value.trim();
+      const location = $("placeLocation").value.trim();
+      const websiteInput = $("placeWebsite").value.trim();
+
+      if (!name || !location) {
+        showToast("Please enter a place name and town or area.");
+        return;
+      }
+
+      let website = "";
+      if (websiteInput) {
+        website = safeHttpUrl(websiteInput);
+        if (!website) {
+          showToast("Enter a valid website URL starting with http:// or https://.");
+          $("placeWebsite").focus();
+          return;
+        }
+      }
+
+      const existingId = $("placeId").value;
+      const existing = places.find(p => p.id === existingId);
+
+      const place = {
+        id: existingId || makeId(),
+        name,
+        category: $("placeCategory").value,
+        location,
+        address: $("placeAddress").value.trim(),
+        phone: $("placePhone").value.trim(),
+        website,
+        rating: $("placeRating").value,
+        status: $("placeVisited").value,
+        notes: $("placeNotes").value.trim(),
+        createdAt: existing?.createdAt || new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+
+      if (existing) {
+        places = places.map(p => p.id === existingId ? place : p);
+      } else {
+        places.push(place);
+      }
+
+      if (savePlaces()) {
+        renderPlaces();
+        resetForm();
+        showToast(existing ? "Place updated." : "Place saved.");
+      }
+    });
+
+    $("cancelEdit").addEventListener("click", resetForm);
+    $("resetForm").addEventListener("click", () => {
+      setTimeout(resetForm, 0);
+    });
+
+    $("placesGrid").addEventListener("click", event => {
+      const button = event.target.closest("button[data-action]");
+      if (!button) return;
+
+      const id = button.dataset.id;
+      if (button.dataset.action === "edit") editPlace(id);
+      if (button.dataset.action === "delete") deletePlace(id);
+    });
+
+    ["searchInput", "categoryFilter", "statusFilter"].forEach(id => {
+      $(id).addEventListener(id === "searchInput" ? "input" : "change", renderPlaces);
+    });
+
+    $("appNav").addEventListener("change", event => {
+      if (event.target.value) window.location.href = event.target.value;
+    });
+
+    $("exportButton").addEventListener("click", () => {
+      const fileData = {
+        app: "OTXS Local Guide",
+        version: 1,
+        exportedAt: new Date().toISOString(),
+        places
+      };
+
+      const blob = new Blob([JSON.stringify(fileData, null, 2)], {
+        type: "application/json"
+      });
+
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "otxs-local-guide.json";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+
+      showToast("Your directory export has been prepared.");
+    });
+
+    $("importButton").addEventListener("click", () => {
+      $("importFile").click();
+    });
+
+    $("importFile").addEventListener("change", async event => {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+
+      try {
+        const text = await file.text();
+        const parsed = JSON.parse(text);
+        const imported = Array.isArray(parsed) ? parsed : parsed.places;
+
+        if (!Array.isArray(imported)) {
+          throw new Error("The file does not contain a places list.");
+        }
+
+        const cleaned = imported
+          .filter(p => p && typeof p === "object" &&
+            typeof p.name === "string" && p.name.trim())
+          .map(p => ({
+            id: String(p.id || makeId()),
+            name: String(p.name).slice(0, 100),
+            category: Object.hasOwn(categoryIcons, p.category) ? p.category : "Other",
+            location: String(p.location || "").slice(0, 120),
+            address: String(p.address || "").slice(0, 250),
+            phone: String(p.phone || "").slice(0, 40),
+            website: safeHttpUrl(String(p.website || "")),
+            rating: ["1", "2", "3", "4", "5"].includes(String(p.rating)) ? String(p.rating) : "",
+            status: ["Planned", "Visited", "Favourite"].includes(p.status) ? p.status : "Planned",
+            notes: String(p.notes || "").slice(0, 1500),
+            createdAt: p.createdAt || new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+          }));
+
+        if (!cleaned.length) {
+          throw new Error("No valid place entries were found.");
+        }
+
+        const replaceAll = confirm(
+          `Found ${cleaned.length} place(s).\n\n` +
+          "Choose OK to replace your current directory.\n" +
+          "Choose Cancel to merge the imported places with your existing directory."
+        );
+
+        if (replaceAll) {
+          places = cleaned;
+        } else {
+          const existingIds = new Set(places.map(p => p.id));
+          const merged = cleaned.map(p => {
+            if (existingIds.has(p.id)) return { ...p, id: makeId() };
+            existingIds.add(p.id);
+            return p;
+          });
+          places = places.concat(merged);
+        }
+
+        if (savePlaces()) {
+          renderPlaces();
+          showToast("Directory imported successfully.");
+        }
+      } catch (error) {
+        alert("Could not import this file: " + error.message);
+      } finally {
+        event.target.value = "";
+      }
+    });
+
+    $("year").textContent = new Date().getFullYear();
+    renderPlaces();
+  </script>
+</body>
+</html>
+
